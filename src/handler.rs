@@ -6,6 +6,7 @@ use serde::Deserialize;
 struct RecoRequest {
     liked: String,
     k: i32,
+    subjects: String,
 }
 
 pub async fn test_handler(ctx: Context) -> String {
@@ -26,7 +27,8 @@ pub async fn recom_handler(mut ctx: Context) -> Response {
 
     let liked_course = body.liked;
     let k = body.k;
-    match get_top_k(&liked_course, k) {
+    let subjects = body.subjects;
+    match get_top_k(&liked_course, k, &subjects) {
         Ok(v) => {
             let json_response = val2json(v);
             Response::new(format!("{}", json_response).into())
@@ -36,5 +38,4 @@ pub async fn recom_handler(mut ctx: Context) -> Response {
             Response::new(format!("liked course not found: {}", liked_course).into())
         }
     }
-    // let reco_res = match get_top_k(&liked_course, k);
 }

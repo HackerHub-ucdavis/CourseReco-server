@@ -1,4 +1,4 @@
-use crate::{recommender::get_top_k, shared::val2json, Context, Response};
+use crate::{recommender::get_top_k, Context, Response};
 use hyper::StatusCode;
 use serde::Deserialize;
 
@@ -29,10 +29,16 @@ pub async fn recom_handler(mut ctx: Context) -> Response {
     let k = body.k;
     let subjects = body.subjects;
     match get_top_k(&liked_course, k, &subjects) {
-        Ok(v) => {
-            let json_response = val2json(v);
-            Response::new(format!("{}", json_response).into())
-        }
+        Ok(v) => match v.as_str() {
+            Some(courses_code) => {
+                println!("key: {}, value: {}", liked_course, courses_code);
+                Response::new(format!("{}", courses_code).into())
+            }
+            None => {
+                println!("Invalid Engine Response");
+                Response::new(format!("liked course not found: {}", liked_course).into())
+            }
+        },
         Err(e) => {
             println!("Error: {:?}", e);
             Response::new(format!("liked course not found: {}", liked_course).into())

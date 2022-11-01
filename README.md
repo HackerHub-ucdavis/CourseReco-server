@@ -13,7 +13,8 @@ cargo run
 Currently only one service is supported 
 
 ```bash
-curl -X GET http://localhost:8000/recom -d '{"liked": "MAT 135A", "k": 3 }'
+> curl -X GET http://localhost:8000/recom -d '{"liked": "MAT 135A", "k": 3, "subjects": "MAT,ECS,STA" }'
+STA 131A,STA 103,ECS 020
 ```
 
 # Acknowledgement
@@ -23,6 +24,7 @@ Visit [this blog](https://blog.logrocket.com/a-minimal-web-service-in-rust-using
 
 # ToDo
 * [ ] Support for other API calls
+* [ ] log system instead of printing everything
+* [ ] Integration with [SchedGo](https://join.schedgo.com/docs/intro/), respond with JSON of all course info from SchedGo
 * [ ] better json response format
-* [ ] Integration with [SchedGo](https://join.schedgo.com/docs/intro/)
-* [ ] better error handling system (log system, no panic_
+* [ ] better error handling system (no panic)

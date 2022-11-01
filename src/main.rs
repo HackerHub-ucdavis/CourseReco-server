@@ -10,7 +10,6 @@ mod context;
 mod handler;
 mod recommender;
 mod router;
-mod shared;
 
 type Response = hyper::Response<hyper::Body>;
 type Error = Box<dyn std::error::Error + Send + Sync + 'static>;
